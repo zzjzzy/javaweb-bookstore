@@ -1,12 +1,18 @@
 package com.itcast.bookstore.user.web.servlet;
 
 import cn.itcast.commons.CommonUtils;
+import cn.itcast.mail.Mail;
+import cn.itcast.mail.MailUtils;
 import cn.itcast.servlet.BaseServlet;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
+import javax.mail.MessagingException;
+import javax.mail.Session;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -73,9 +79,36 @@ public class UserServlet extends BaseServlet {
 			return "f:/jsps/user/regist.jsp";
 		}
     	
-    	System.out.println("这里写发邮件的代码");
+    	Properties props = new Properties();
+//    	Inputsteam
+    	props.load(this.getClass().getClassLoader().getResourceAsStream("email_template.properties"));
+    	String host = props.getProperty("host");
+    	String uname = props.getProperty("uname");
+    	String pwd = props.getProperty("pwd");
+    	String from = props.getProperty("from");
+    	String to = form.getEmail();
+    	String subject = props.getProperty("subject");
+    	subject = new String(subject.getBytes("ISO-8859-1"), "utf-8");
+//    	System.out.println(subject);
+    	String content = props.getProperty("content");
+    	content = new String(content.getBytes("ISO-8859-1"), "utf-8");
+    	content = MessageFormat.format(content, form.getCode());
+    	//zzj19930120@163.com
+    	Session session = MailUtils.createSession(host, uname, pwd);
+    	Mail mail = new Mail(from, to, subject, content);
+    	try {
+			MailUtils.send(session, mail);
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
     	request.setAttribute("msg", "恭喜，注册成功！请去注册邮箱激活账号！");
     	return "f:/jsps/msg.jsp";
+    }
+    
+    public void active(HttpServletRequest request, HttpServletResponse response) {
+    	System.out.println("激活成功！");
     }
 
 }

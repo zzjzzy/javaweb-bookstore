@@ -25,9 +25,9 @@
 <p style="color: red; font-weight: 900">${msg }</p>
 <form action="<c:url value='/UserServlet'/>" method="post">
 	<input type="hidden" name="method" value="regist"/>
-	用户名：<input type="text" name="username" value=""/> ${errors.username } <br/>
+	用户名：<input type="text" name="username" value="${user.username }"/> ${errors.username } <br/>
 	密　码：<input type="password" name="password"/> ${errors.password } <br/>
-	邮　箱：<input type="text" name="email" value=""/> ${errors.email } <br/>
+	邮　箱：<input type="text" name="email" value="${user.email}"/> ${errors.email } <br/>
 	<input type="submit" value="注册"/>
 </form>
   </body>
