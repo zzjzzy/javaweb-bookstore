@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.itcast.bookstore.user.service.UserException;
-
+import com.itcast.bookstore.cart.domain.Cart;
 import com.itcast.bookstore.user.domain.User;
 import com.itcast.bookstore.user.service.UserService;
 
@@ -107,8 +107,35 @@ public class UserServlet extends BaseServlet {
     	return "f:/jsps/msg.jsp";
     }
     
-    public void active(HttpServletRequest request, HttpServletResponse response) {
-    	System.out.println("激活成功！");
+    public String active(HttpServletRequest request, HttpServletResponse response) {
+    	String code = request.getParameter("code");
+    	try {
+			userService.active(code);
+			request.setAttribute("msg", "恭喜，激活成功！");
+		} catch (UserException e) {
+			request.setAttribute("msg", e.getMessage());
+		}
+    	
+    	return "f:/jsps/msg.jsp";
+    }
+    
+    public String login(HttpServletRequest request, HttpServletResponse response) {
+    	User form = CommonUtils.toBean(request.getParameterMap(), User.class);
+    	try {
+			User user = userService.login(form);
+			request.getSession().setAttribute("session_user", user);
+			request.getSession().setAttribute("cart", new Cart());
+			return "r:/index.jsp";
+		} catch (UserException e) {
+			request.setAttribute("msg", e.getMessage());
+			request.setAttribute("form", form);
+			return "f:/jsps/user/login.jsp";
+		}
+    }
+    
+    public String quit(HttpServletRequest request, HttpServletResponse response) {
+    	request.getSession().invalidate();
+    	return "r:/index.jsp";
     }
 
 }
