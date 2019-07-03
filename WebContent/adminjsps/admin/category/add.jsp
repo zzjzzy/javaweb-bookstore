@@ -22,8 +22,10 @@
   <body>
     <h1>添加分类</h1>
     <p style="font-weight: 900; color: red">${msg }</p>
-    <form action="javascript:alert('添加分类成功！');" method="post">
-    	分类名称：<input type="text" name="cname"/>
+    <form action="<c:url value='/admin/AdminCategoryServlet'/>" method="post">	
+    	<input type="hidden" name="method" value="add"/>
+    	分类名称：<input type="text" name="cname" value="${cname }"/> 
+    	<span style="color:red;">${errors.cname }</span> <br/>
     	<input type="submit" value="添加分类"/>
     </form>
   </body>

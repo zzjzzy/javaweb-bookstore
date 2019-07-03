@@ -12,7 +12,7 @@ public class Cart {
 	public double getTotal() {
 		BigDecimal total = new BigDecimal("0");
 		for (CartItem item : map.values()) {
-			BigDecimal subTotal = new BigDecimal(item.getSubTotal());
+			BigDecimal subTotal = new BigDecimal(item.getSubTotal()+"");
 			total = total.add(subTotal);
 		}
 		return total.doubleValue();

@@ -9,8 +9,8 @@ public class CartItem {
 	private Book book;
 	private int count;
 	public double getSubTotal() {
-		BigDecimal d1 = new BigDecimal(count);
-		BigDecimal d2 = new BigDecimal(book.getPrice());
+		BigDecimal d1 = new BigDecimal(count+"");
+		BigDecimal d2 = new BigDecimal(book.getPrice()+"");
 		return d1.multiply(d2).doubleValue();
 	}
 	
