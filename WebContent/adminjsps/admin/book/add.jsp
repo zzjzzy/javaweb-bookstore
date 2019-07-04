@@ -22,7 +22,7 @@
   <body>
     <h1>添加图书</h1>
     <p style="font-weight: 900; color: red">${msg }</p>
-    <form action="javascript:alert('添加图书成功！')" method="post" enctype="multipart/form-data">
+    <form action="<c:url value='/admin/AdminAddBookServlet'/>" method="post" enctype="multipart/form-data">
     	图书名称：<input style="width: 150px; height: 20px;" type="text" name="bname"/><br/>
     	图书图片：<input style="width: 223px; height: 20px;" type="file" name="image"/><br/>
     	图书单价：<input style="width: 150px; height: 20px;" type="text" name="price"/><br/>

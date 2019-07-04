@@ -28,4 +28,9 @@ public class BookService {
 	public void edit(Book book) {
 		bookDao.edit(book);
 	}
+
+	public void add(Book book) {
+		bookDao.add(book);
+		
+	}
 }

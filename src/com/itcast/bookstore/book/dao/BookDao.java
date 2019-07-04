@@ -83,4 +83,16 @@ public class BookDao {
 			throw new RuntimeException();
 		}
 	}
+
+	public void add(Book book) {
+		String sql = "insert into book(bname, author, price, cid, image, bid) values(?,?,?,?,?,?)";
+		try {
+			Object[] params = {book.getBname(), book.getAuthor(), 
+					book.getPrice(), book.getCategory().getCid(), 
+					book.getImage(), book.getBid()};
+			qr.update(sql, params);
+		} catch (SQLException e) {
+			throw new RuntimeException();
+		}
+	}
 }
