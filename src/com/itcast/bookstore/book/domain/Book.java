@@ -10,6 +10,14 @@ public class Book {
 	private String author;
 	private String image;
 	private Category category;
+	private boolean del;
+	
+	public boolean isDel() {
+		return del;
+	}
+	public void setDel(boolean del) {
+		this.del = del;
+	}
 	public String getBid() {
 		return bid;
 	}

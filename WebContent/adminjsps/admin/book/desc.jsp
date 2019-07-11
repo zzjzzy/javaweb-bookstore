@@ -16,6 +16,23 @@
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+<script type="text/javascript">
+ window.onload = function(){
+	var del = document.getElementById("del");
+	del.onclick = function(){
+		addMethod("delete");
+	}
+	var mod = document.getElementById("mod");
+	mod.onclick = function(){
+		addMethod("edit");
+	}
+	function addMethod(methodName){
+		var methodId = document.getElementById("methodId");
+		methodId.value = methodName;
+	}
+}
+
+</script>
 <style type="text/css">
 	body {
 		font-size: 10pt;
@@ -38,7 +55,8 @@
   <div>
     <img src="<c:url value='/${book.image }'/>" border="0"/>
   </div>
-  <form style="margin:20px;" id="form" action="/admin/AdminBookServlet" method="post">
+  <form style="margin:20px;" id="form" action="<c:url value='/admin/AdminBookServlet'/>" method="post">
+    <input type="hidden" name="method" value="" id="methodId"/>
   	<input type="hidden" name="bid" value="${book.bid }"/>
   	图书名称：<input type="text" name="bname" value="${book.bname }"/><br/>
   	图书单价：<input type="text" name="price" value="${book.price }元"/><br/>
@@ -48,8 +66,8 @@
      			<option value="${c.cid }" <c:if test="${c.cid eq book.category.cid }">selected="selected"</c:if> >${c.cname }</option>
      		</c:forEach>
     	</select><br/>
-  	<input type="submit" name="method" value="del" onclick="return confirm('是否真要删除该图书？');"/>
-  	<input type="submit" name="method" value="mod"/>
+  	<input type="submit" value="删除" id="del"/>
+  	<input type="submit" value="编辑" id="mod"/>
   </form>
   </body>
 </html>

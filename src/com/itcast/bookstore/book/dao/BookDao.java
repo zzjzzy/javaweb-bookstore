@@ -22,7 +22,7 @@ public class BookDao {
 	
 	public List<Book> findAll(){
 		try {
-			String sql = "select * from book";
+			String sql = "select * from book where del = false";
 			return qr.query(sql, new BeanListHandler<Book>(Book.class));
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -31,7 +31,7 @@ public class BookDao {
 	
 	public List<Book> findByCategory(String cid){
 		try {
-			String sql = "select * from book where cid = ?";
+			String sql = "select * from book where cid = ? and del = false";
 			return qr.query(sql, new BeanListHandler<Book>(Book.class), cid);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -40,7 +40,7 @@ public class BookDao {
 
 	public Book findById(String bid) {
 		try {
-			String sql = "select * from book where bid = ?";
+			String sql = "select * from book where bid = ? and del = false";
 			Map<String, Object> map = qr.query(sql, new MapHandler(), bid);
 			Category category = CommonUtils.toBean(map, Category.class);
 			Book book = CommonUtils.toBean(map, Book.class);
@@ -52,7 +52,7 @@ public class BookDao {
 	}
 
 	public int findBookCount(String cid) {
-		String sql = "select count(*) from book where cid = ?";
+		String sql = "select count(*) from book where cid = ? and del = false";
 		Number number;
 		try {
 			number = (Number) qr.query(sql, new ScalarHandler(), cid);
@@ -64,7 +64,7 @@ public class BookDao {
 	}
 	
 	public void delete(String bid) {
-		String sql = "delete from book where bid = ?";
+		String sql = "update book set del = true where bid = ?";
 		try {
 			qr.update(sql, bid);
 		} catch (SQLException e) {
@@ -73,11 +73,11 @@ public class BookDao {
 	}
 	
 	public void edit(Book book) {
-		String sql = "update book set bname=?, author=?, price=?, cid=?, image=? where bid = ?";
+		String sql = "update book set bname=?, author=?, price=?, cid=? where bid = ?";
 		try {
 			Object[] params = {book.getBname(), book.getAuthor(), 
 					book.getPrice(), book.getCategory().getCid(), 
-					book.getImage(), book.getBid()};
+					book.getBid()};
 			qr.update(sql, params);
 		} catch (SQLException e) {
 			throw new RuntimeException();

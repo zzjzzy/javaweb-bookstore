@@ -28,12 +28,9 @@
     	图书单价：<input style="width: 150px; height: 20px;" type="text" name="price"/><br/>
     	图书作者：<input style="width: 150px; height: 20px;" type="text" name="author"/><br/>
     	图书分类：<select style="width: 150px; height: 20px;" name="cid">
-    		<option value="">JavaSE</option>
-    		<option value="">JavaEE</option>
-			<option value="">JavaScript</option>
-			<option value="">Hibernate</option>
-			<option value="">Struts</option>
-			<option value="">Spring</option>
+    		<c:forEach items="${categoryList }" var="c">
+				<option value="${c.cid }"> ${c.cname }</option>
+			</c:forEach>
     	</select>
     	<br/>
     	<input type="submit" value="添加图书"/>
